@@ -4,10 +4,9 @@ import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import './App.css'
 import Students from './components/students'
-import { Button } from './components/ui/button'
 import Count from './hooks/count'
-//rafce
-
+import Register from './hooks/Register'
+import Users from './hooks/Users'
 const App = () => {
   const [count, setCount] = useState(0)
 
@@ -16,6 +15,8 @@ const App = () => {
         <div>hi</div>
         <Students name="John" age={20} />
         <Count />
+        <Register />
+        <Users />
 
     <>
       <section id="center">
@@ -37,14 +38,6 @@ const App = () => {
         >
           Count is {count}
         </button>
-        <div className="flex flex-wrap justify-center gap-2">
-          <Button variant="default">Default</Button>
-          <Button variant="secondary">Secondary</Button>
-          <Button variant="outline">Outline</Button>
-          <Button variant="ghost">Ghost</Button>
-          <Button variant="destructive">Delete</Button>
-          <Button variant="link">Learn more</Button>
-        </div>
       </section>
 
       <div className="ticks"></div>

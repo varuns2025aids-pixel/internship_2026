@@ -1,9 +1,13 @@
-import { useState } from 'react'
+import { useEffect,useState } from 'react'
 import { Button } from '@/components/ui/button'
 
 const Count = () => {
   const [count, setCount] = useState(0)
   const [showMessage, setShowMessage] = useState(false)
+  useEffect(() => {
+    console.log('Count value changed:', count)
+  }, [count])
+  
 
   const increase = () => {
     setCount((currentCount) => currentCount + 1)
