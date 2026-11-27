@@ -1,53 +1,72 @@
-import { useEffect, useState } from 'react'
-
-const userList = [
-  { id: 1, name: 'John', email: 'john@example.com', password: 'john123' },
-  { id: 2, name: 'Mary', email: 'mary@example.com', password: 'mary123' },
-  { id: 3, name: 'Sam', email: 'sam@example.com', password: 'sam123' },
-  { id: 4, name: 'Sara', email: 'sara@example.com', password: 'sara123' },
-]
-
+import { useEffect, useState } from "react"
+import axios from "axios"
+import {Table,TableHeader,TableRow,TableBody,TableCell, TableHead} from '@/components/ui/table'
 const Users = () => {
-  const [users] = useState(userList)
+    const [users,setUsers]=useState([])
+    const getUsers = async () => {
+      const response = await axios.get(
+        'https://jsonplaceholder.typicode.com/users',
+      )
+      setUsers(response.data)
+    }
 
-  useEffect(() => {
-    console.log(userList)
-  }, [])
-
+    const addUser=async()=>{
+      const response = await axios.post(
+        'https://jsonplaceholder.typicode.com/users',
+        {
+          name:'Test',
+          email:"test@gmail.com"
+        }
+      )
+      console.log(response.data);
+      
+    }
+    const deleteUser=async()=>{
+      const response = await axios.delete(
+        'https://jsonplaceholder.typicode.com/users/11'
+      )
+      console.log("user deleted");
+      
+    }
+    
+    useEffect(()=>{ 
+        addUser()
+        getUsers()
+        deleteUser()
+    },[])
   return (
     <div>
-      <h2>Users: {users.length}</h2>
+      <h1>User Names</h1>
+      <hr />
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Name</TableHead>
+            <TableHead>Email</TableHead>
+          </TableRow>
+        </TableHeader>
 
-      <h3>User list</h3>
-      <ul>
-        {users.map((user) => (
-          <li key={user.id}>
-            {user.name} - {user.email} - {user.password}
-          </li>
-        ))}
-      </ul>
-
-      <h3>User table</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Password</th>
-          </tr>
-        </thead>
-        <tbody>
+        <TableBody>
           {users.map((user) => (
-            <tr key={user.id}>
-              <td>{user.name}</td>
-              <td>{user.email}</td>
-              <td>{user.password}</td>
-            </tr>
+            <TableRow>
+              <TableCell>{user.name}</TableCell>
+              <TableCell>{user.email}</TableCell>
+            </TableRow>
           ))}
-        </tbody>
-      </table>
+        </TableBody>
+      </Table>
+
+      {<ul>
+          {users.map((user)=>{
+            return (
+              <li>
+                Name-{user.name} <br />
+                Email-{user.email} <hr />
+              </li>
+            ) 
+          })}
+        </ul> }
     </div>
   )
 }
-
 export default Users

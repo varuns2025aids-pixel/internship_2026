@@ -1,131 +1,106 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
+import { Link, Route, Routes } from 'react-router-dom'
 import './App.css'
 import Students from './components/students'
 import Count from './hooks/count'
 import Register from './hooks/Register'
 import Users from './hooks/Users'
-const App = () => {
-  const [count, setCount] = useState(0)
+import Products, { ProductDetails } from './hooks/Products'
+import { Button } from './components/ui/button'
+import Parents from './components/ui/Parents'
+
+const Components = () => {
+  return (
+    <div>
+      <Students name="John" age={20} />
+      <Count />
+      <Register />
+      <Users />
+      <Parents />
+    </div>
+  )
+}
+
+const Home = () => {
+  return (
+    <div>
+      <h1>Home</h1>
+      <Components />
+    </div>
+  )
+}
+
+const About = () => {
+  const showMessage = (buttonName) => {
+    alert(`${buttonName} button clicked`)
+  }
 
   return (
-    <>
-        <div>hi</div>
-        <Students name="John" age={20} />
-        <Count />
-        <Register />
-        <Users />
-
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
+    <div>
+      <h1>About</h1>
+      <div className="about-buttons">
+        <Button onClick={() => showMessage('Default')}>Default</Button>
+        <Button variant="secondary" onClick={() => showMessage('Secondary')}>
+          Secondary
+        </Button>
+        <Button variant="outline" onClick={() => showMessage('Outline')}>
+          Outline
+        </Button>
+        <Button variant="ghost" onClick={() => showMessage('Ghost')}>
+          Ghost
+        </Button>
+        <Button
+          variant="destructive"
+          onClick={() => showMessage('Destructive')}
         >
-          Count is {count}
-        </button>
-      </section>
+          Delete
+        </Button>
+        <Button variant="link" onClick={() => showMessage('Link')}>
+          Learn more
+        </Button>
+      </div>
+      <Components />
+    </div>
+  )
+}
 
-      <div className="ticks"></div>
+const Contact = () => {
+  return (
+    <div>
+      <h1>Contact</h1>
+      <Components />
+    </div>
+  )
+}
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+const Service = () => {
+  return (
+    <div>
+      <h1>Service</h1>
+      <Components />
+    </div>
+  )
+}
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </></>
+const App = () => {
+  return (
+    <div>
+      <nav className="navigation">
+        <Link to="/">Home</Link>
+        <Link to="/about">About</Link>
+        <Link to="/contact">Contact</Link>
+        <Link to="/service">Service</Link>
+        <Link to="/products">Products</Link>
+      </nav>
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/service" element={<Service />} />
+        <Route path="/products" element={<Products />} />
+        <Route path="/products/:id" element={<ProductDetails />} />
+      </Routes>
+    </div>
   )
 }
 
